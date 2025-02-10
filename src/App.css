@@ -1,0 +1,71 @@
+.app-container {
+  background: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  gap: 25px;
+  padding: 20px 5%;
+  background: var(--cream-bg);
+}
+
+.emails-section {
+  flex: 3;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.email-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.email-item {
+  background: var(--white);
+  margin: 15px 0;
+  padding: 18px;
+  border-left: 4px solid var(--maroon-primary);
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.email-item:hover {
+  transform: translateX(8px);
+  box-shadow: 0 3px 12px rgba(128, 0, 0, 0.1);
+}
+
+.email-subject {
+  color: var(--maroon-primary);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.news-slider {
+  flex: 1;
+  min-width: 300px;
+  height: fit-content;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .emails-section {
+    max-height: none;
+  }
+
+  .news-slider {
+    min-width: 100%;
+  }
+}

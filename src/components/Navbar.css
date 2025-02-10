@@ -1,0 +1,69 @@
+/* Updated Navbar.css using theme variables */
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--maroon-primary);
+    /* Using theme color */
+    color: var(--white);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--white);
+}
+
+.login-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--maroon-secondary);
+    border: 2px solid var(--cream-bg);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-button:hover {
+    background-color: var(--white);
+    color: var(--maroon-primary);
+    border-color: var(--maroon-primary);
+    transform: translateY(-2px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        /* Keep horizontal layout */
+        padding: 0.8rem 5%;
+    }
+
+    .brand {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        /* Remove mobile margin */
+    }
+
+    .login-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+}
+
+/* Add this to your App.css */
+.main-content {
+    margin-top: 70px;
+    /* Compensate for fixed navbar height */
+}
