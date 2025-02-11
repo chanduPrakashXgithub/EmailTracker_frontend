@@ -11,13 +11,15 @@ const NewsSlider = () => {
   return (
     <div className="news-slider">
       <h2>Latest News</h2>
-      {news.map((item) => (
-        <div key={item.id} className="news-item">
-          <h3>{item.title}</h3>
-          <p className="news-date">{item.date}</p>
-          <p>{item.content}</p>
-        </div>
-      ))}
+      <div className="news-list">
+        {news.map((item) => (
+          <div key={item.id} className="news-item">
+            <h3>{item.title}</h3>
+            <p className="news-date">{item.date}</p>
+            <p>{item.content}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

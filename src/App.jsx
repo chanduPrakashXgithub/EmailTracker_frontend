@@ -13,18 +13,23 @@ const App = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await fetch("https://emailtracer-backend.onrender.com/api/emails", {
-  credentials: "include",
-});
 
+        const response = await fetch("https://emailtracer-backend.onrender.com/api/emails", {
+          credentials: "include",
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch emails. Please try again.");
         }
 
         const data = await response.json();
-        setEmails(data.error ? [] : data);
-        setError(data.error || null);
+
+        if (data.error) {
+          setEmails([]);
+          setError(data.error);
+        } else {
+          setEmails(data);
+        }
       } catch (error) {
         console.error("Error fetching emails:", error);
         setError(error.message || "An unexpected error occurred.");
@@ -55,9 +60,10 @@ const App = () => {
               {emails.map((email, index) => (
                 <li key={index} className="email-item">
                   <strong className="email-subject">
-                    {email.payload?.headers?.find((h) => h.name === "Subject")?.value || "No Subject"}
+                    {email.subject || "No Subject"}
                   </strong>
                   <p className="email-snippet">{email.snippet || "No Snippet"}</p>
+                  <p className="email-date">{email.date || "No Date"}</p>
                 </li>
               ))}
             </ul>

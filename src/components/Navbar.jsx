@@ -5,12 +5,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="brand">Email Tracker</div>
-      <button 
+      <a 
         className="login-button" 
-        onClick={() => (window.location.href = "https://emailtracer-backend.onrender.com/api/auth/google")}
+        href="https://emailtracer-backend.onrender.com/api/auth/google"
       >
         Login with Google
-      </button>
+      </a>
     </nav>
   );
 };
