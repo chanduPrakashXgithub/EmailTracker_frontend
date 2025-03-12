@@ -17,6 +17,7 @@ const App = () => {
         const response = await fetch("https://emailtracer-backend.onrender.com/api/emails", {
           credentials: "include",
         });
+        console.log("✅ Fetch response:", response);
 
         if (!response.ok) {
           throw new Error("Failed to fetch emails. Please try again.");
