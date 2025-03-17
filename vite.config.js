@@ -9,6 +9,7 @@ export default defineConfig({
         target: 'https://emailtracer-backend.onrender.com',
         changeOrigin: true,
         secure: true,
+        ws: true, // Ensure WebSocket support
       },
     },
   },
