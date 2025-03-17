@@ -14,9 +14,10 @@ const App = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch("https://emailtracer-backend.onrender.com/api/emails", {
-          credentials: "include",
+        const response = await fetch("/api/emails", {
+          credentials: "include", // Ensures cookies are sent
         });
+
         console.log("✅ Fetch response:", response);
 
         if (!response.ok) {
@@ -32,7 +33,7 @@ const App = () => {
           setEmails(data);
         }
       } catch (error) {
-        console.error("Error fetching emails:", error);
+        console.error("❌ Error fetching emails:", error);
         setError(error.message || "An unexpected error occurred.");
         setEmails([]);
       } finally {
@@ -58,8 +59,8 @@ const App = () => {
             <p>No emails found.</p>
           ) : (
             <ul className="email-list">
-              {emails.map((email, index) => (
-                <li key={index} className="email-item">
+              {emails.map((email) => (
+                <li key={email.id} className="email-item">
                   <strong className="email-subject">
                     {email.subject || "No Subject"}
                   </strong>
