@@ -5,48 +5,44 @@ import "./App.css";
 
 const App = () => {
   const [emails, setEmails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchEmails = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
+  const fetchEmails = async (email, password) => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
-        const response = await fetch("/api/emails", {
-          credentials: "include", // Ensures cookies are sent
-        });
+      const response = await fetch("https://emailtracer-backend.onrender.com/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-        console.log("✅ Fetch response:", response);
+      if (!response.ok) throw new Error("Failed to fetch emails");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch emails. Please try again.");
-        }
+      const data = await response.json();
 
-        const data = await response.json();
-
-        if (data.error) {
-          setEmails([]);
-          setError(data.error);
-        } else {
-          setEmails(data);
-        }
-      } catch (error) {
-        console.error("❌ Error fetching emails:", error);
-        setError(error.message || "An unexpected error occurred.");
+      if (data.error) {
         setEmails([]);
-      } finally {
-        setIsLoading(false);
+        setError(data.error);
+      } else {
+        setEmails(data);
       }
-    };
-
-    fetchEmails();
-  }, []);
+    } catch (error) {
+      console.error("❌ Error fetching emails:", error);
+      setError(error.message || "An unexpected error occurred.");
+      setEmails([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="app-container">
-      <Navbar />
+      <Navbar onLogin={fetchEmails} />
       <div className="main-content">
         {/* Emails Section */}
         <div className="emails-section">
@@ -64,8 +60,8 @@ const App = () => {
                   <strong className="email-subject">
                     {email.subject || "No Subject"}
                   </strong>
-                  <p className="email-snippet">{email.snippet || "No Snippet"}</p>
                   <p className="email-date">{email.date || "No Date"}</p>
+                  <p className="email-snippet">{email.snippet || "No Snippet"}</p>
                 </li>
               ))}
             </ul>
