@@ -7,48 +7,40 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://emailtracer-backend.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, appPassword: password }),
+          credentials: "include",
+        }
+      );
 
-      const data = await response.json();
+      if (!response.ok) throw new Error("Login failed");
 
-      if (data.success) {
-        alert("Login successful");
-        window.location.reload();
-      } else {
-        alert(data.error || "Login failed");
-      }
+      window.location.reload(); // ✅ Reload after successful login
     } catch (error) {
-      console.error("❌ Error:", error.message);
-      alert("An error occurred during login");
+      console.error("❌ Login error:", error);
     }
   };
 
   return (
     <nav className="navbar">
       <div className="brand">Email Tracker</div>
-      <div className="login-form">
-        <input
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="login-button" onClick={handleLogin}>
-          Login
-        </button>
-      </div>
+      <input
+        type="email"
+        placeholder="Enter email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Enter password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
     </nav>
   );
 };
